@@ -1,0 +1,15 @@
+session_name: main
+windows:
+  - window_name: indico
+    start_directory: ~/dev/indico/src
+    focus: true
+    layout: main-vertical 
+    panes:
+      - tail -f ../data/log/indico.log | egrep -v 'flask-session|task-locks|GenericCache/Rooms|GenericCache/memoize'
+      - indico run -h 127.0.0.1 -p 8000 -q --enable-evalex --url https://feta.cern.ch --proxy --evalex-from 128.141.210.47 --reloader stat
+      - focus: true
+      - ./bin/maintenance/build-assets.py indico --dev --watch --clean
+  - window_name: root
+    start_directory: ~/
+    panes:
+      - focus: true
